@@ -11,18 +11,43 @@ import javax.swing.Timer;
 public class MGDBeepGenerator {
 
     private Timer timer;
+    private int delay;
+    private int delayVarienceLimit;
     private MGDNoteComputingUnit ncu;
     private List<Integer> readyReaderList;
     private Map<Integer,Long> coolingReaderDict;
     private Random random;
+    private double failure;
+    // order: normal, discount, under 100 dollar
+    private double[] userType = {0.58,0.34,0.08};
 
     MGDBeepGenerator(){
+        delay = 250;
+        delayVarienceLimit = 20;
         // Maybe better to use util.Timer
-        timer = new Timer(200,new TimerListener());
+        timer = new Timer(delay,new TimerListener());
         ncu = new MGDNoteComputingUnit();
-        setReadyReaderList(6);
+        setReadyReaderList(8);
         coolingReaderDict = new HashMap<Integer, Long>();
         random = new Random();
+        failure = 0.02;
+    }
+
+    private void delayRandomAdjustment(){
+        double r = Math.random();
+        int randomVarience = random.nextInt(delayVarienceLimit);
+        if(r<0.5){
+            delay = delay - randomVarience;
+        }else{
+            delay = delay + randomVarience;
+        }
+        if(delay<=150){
+            delay = 250;
+        }
+        if(delay>=5000){
+            delay = 300;
+        }
+        timer.setDelay(delay);
     }
 
     private int randomGenerateReaderId(){
@@ -34,11 +59,36 @@ public class MGDBeepGenerator {
                 it.remove();
             }
         }
+        int listSize = readyReaderList.size();
+        if (listSize == 0){
+            return -1;
+        }
         int rand = random.nextInt(readyReaderList.size());
         int readerId = readyReaderList.get(rand);
         readyReaderList.remove(rand);
         coolingReaderDict.put(readerId,(new Date()).getTime());
         return readerId;
+    }
+
+    private boolean randomGenerateValidation(){
+        double r = Math.random();
+        if(r<failure){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    private int randomGenerateUserType(){
+        double r = Math.random();
+        double cumulation = 0;
+        for(int i=0;i<userType.length;i++){
+            cumulation = cumulation + userType[i];
+            if(r<cumulation){
+                return i;
+            }
+        }
+        return -1;
     }
 
     public void setReadyReaderList(int readers){
@@ -48,7 +98,21 @@ public class MGDBeepGenerator {
         }
     }
 
+    public void setFailureRate(double f){
+        failure = f;
+    }
+
+    public void setUserTypeRate(double first,double second, double third){
+        userType[0] = first;
+        userType[1] = second;
+        userType[2] = third;
+    }
+
     public void setDelay(int newDelay){
+        delay = newDelay;
+    }
+
+    public void setDelayImmediately(int newDelay){
         timer.setDelay(newDelay);
     }
 
@@ -63,7 +127,12 @@ public class MGDBeepGenerator {
     private class TimerListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            ncu.trigerBeep(randomGenerateReaderId());
+            int reederId = randomGenerateReaderId();
+            if (reederId==-1){
+            }else {
+                ncu.triggerBeep(reederId, randomGenerateValidation(),randomGenerateUserType(),(new Date()).getTime());
+                delayRandomAdjustment();
+            }
         }
     }
 }

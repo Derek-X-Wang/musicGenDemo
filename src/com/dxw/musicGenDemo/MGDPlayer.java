@@ -14,6 +14,7 @@ public class MGDPlayer {
     private int defaultInstrument;
 
     MGDPlayer() throws MidiUnavailableException{
+        defaultInstrument = 0;
         player = new RealtimePlayer();
     }
     MGDPlayer(int instrument) throws MidiUnavailableException{
@@ -33,5 +34,6 @@ public class MGDPlayer {
     public void playNoteWithInstrumentChanged(String note, int instrument){
         player.changeInstrument(instrument);
         player.startNote(new Note(note));
+        player.changeInstrument(defaultInstrument);
     }
 }
