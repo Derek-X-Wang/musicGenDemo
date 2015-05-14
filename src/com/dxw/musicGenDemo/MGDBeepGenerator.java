@@ -22,7 +22,7 @@ public class MGDBeepGenerator {
     private double[] userType = {0.58,0.34,0.08};
 
     MGDBeepGenerator(){
-        delay = 250;
+        delay = 500;
         delayVarienceLimit = 20;
         // Maybe better to use util.Timer
         timer = new Timer(delay,new TimerListener());
@@ -30,7 +30,7 @@ public class MGDBeepGenerator {
         setReadyReaderList(8);
         coolingReaderDict = new HashMap<Integer, Long>();
         random = new Random();
-        failure = 0.02;
+        failure = 0.2;
     }
 
     private void delayRandomAdjustment(){
@@ -42,10 +42,10 @@ public class MGDBeepGenerator {
             delay = delay + randomVarience;
         }
         if(delay<=150){
-            delay = 250;
+            delay = 500;
         }
         if(delay>=5000){
-            delay = 300;
+            delay = 500;
         }
         timer.setDelay(delay);
     }

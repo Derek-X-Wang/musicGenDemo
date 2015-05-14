@@ -12,7 +12,7 @@ import java.util.Date;
 public class MGDNoteComputingUnit {
 
     private MGDPlayer player;
-    private String prestoredHardcodedsong = "G5w A5w G5h A5h G5h F5h G5h A5h G5h F5h G5w F5h D5h C5w D5h F5h C5qa0d127 D5w A5w D5h G5h G5h D5h A5w A5h A5h D5h G5h G5h D5h C5h C5h C5h C5h D5h F5h D5h C5h A4w D5w C5w C5-w-";
+    private String prestoredHardcodedsong = "Cq. Cq. Gq. Gq. Aq. Aq. Gh. Fq. Fq. Eq. Eq. Dq. Dq. Ch. Gq. Gq. Fq. Fq. Eq. Eq. Dh. Gq. Gq. Fq. Fq. Eq. Eq. Dh. Cq. Cq. Gq. Gq. Aq. Aq. Gh. Fq. Fq. Eq. Eq. Dq. Dq. Ch.";
     private String[] sounds;
     private int count = 0;
     private int harmoniousTimeOption = 200;
