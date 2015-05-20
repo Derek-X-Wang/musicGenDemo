@@ -12,7 +12,7 @@ public class MGDBeepGenerator {
 
     private Timer timer;
     private int delay;
-    private int delayVarienceLimit;
+    private int delayVarianceLimit;
     private MGDNoteComputingUnit ncu;
     private List<Integer> readyReaderList;
     private Map<Integer,Long> coolingReaderDict;
@@ -23,7 +23,7 @@ public class MGDBeepGenerator {
 
     MGDBeepGenerator(){
         delay = 500;
-        delayVarienceLimit = 20;
+        delayVarianceLimit = 20;
         // Maybe better to use util.Timer
         timer = new Timer(delay,new TimerListener());
         ncu = new MGDNoteComputingUnit();
@@ -35,11 +35,11 @@ public class MGDBeepGenerator {
 
     private void delayRandomAdjustment(){
         double r = Math.random();
-        int randomVarience = random.nextInt(delayVarienceLimit);
+        int randomVariance = random.nextInt(delayVarianceLimit);
         if(r<0.5){
-            delay = delay - randomVarience;
+            delay = delay - randomVariance;
         }else{
-            delay = delay + randomVarience;
+            delay = delay + randomVariance;
         }
         if(delay<=150){
             delay = 500;
@@ -114,6 +114,18 @@ public class MGDBeepGenerator {
 
     public void setDelayImmediately(int newDelay){
         timer.setDelay(newDelay);
+    }
+
+    public void setDelayVarianceLimit(int delayVarianceLimit) {
+        this.delayVarianceLimit = delayVarianceLimit;
+    }
+
+    public void setHarmoniousTimeOptionInNCU(int harmoniousTimeOption){
+        ncu.setHarmoniousTimeOption(harmoniousTimeOption);
+    }
+
+    public void setDefaultInstrument(int newDefaultInstrument){
+        ncu.setDefaultInstrument(newDefaultInstrument);
     }
 
     public void start(){

@@ -11,7 +11,10 @@ import java.awt.event.ActionListener;
 public class MenuPanel extends JPanel implements ActionListener {
 
     protected JLabel actionLabel;
-    MenuPanel(){
+    private MGDBeepGenerator beepGenerator;
+    MenuPanel(MGDBeepGenerator bg){
+        beepGenerator = bg;
+
         setLayout(new BorderLayout());
 
         //讀卡器數量
@@ -93,25 +96,48 @@ public class MenuPanel extends JPanel implements ActionListener {
             c.weightx = 1.0;
             container.add(textFields[i], c);
         }
+
+        //Temp simple control for demo
+        JButton start = new JButton("Start");
+        start.setActionCommand("start");
+        JButton stop = new JButton("Stop");
+        stop.setActionCommand("stop");
+
+        container.add(start,c);
+        container.add(stop,c);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String prefix = "Change ";
-        String input = ((JTextField)e.getSource()).getText();
-        if ("readerNumber".equals(e.getActionCommand())) {
-            actionLabel.setText(prefix + "reader number to " + input);
-        } else if ("arrivingRate".equals(e.getActionCommand())) {
-            actionLabel.setText(prefix + "arriving rate to " + input);
-        } else if ("arrivingRateVariance".equals(e.getActionCommand())) {
-            actionLabel.setText(prefix + "arriving rate variance to " + input);
-        } else if ("failureRate".equals(e.getActionCommand())) {
-            actionLabel.setText(prefix + "failure rate to " + input);
-        } else if ("harmoniousTimeOption".equals(e.getActionCommand())) {
-            actionLabel.setText(prefix + "harmonious time option to " + input);
-        } else if ("defaultInstrument".equals(e.getActionCommand())) {
-            actionLabel.setText(prefix + "default instrument to " + input);
-            //Toolkit.getDefaultToolkit().beep();
+        if ("start".equals(e.getActionCommand())) {
+            actionLabel.setText("Starttttttttting");
+            beepGenerator.start();
+        } else if ("stop".equals(e.getActionCommand())) {
+            actionLabel.setText("Stopppppppppping");
+            beepGenerator.stop();
+        }else {
+
+            String prefix = "Change ";
+            String input = ((JTextField) e.getSource()).getText();
+            if ("readerNumber".equals(e.getActionCommand())) {
+                actionLabel.setText(prefix + "reader number to " + input);
+            } else if ("arrivingRate".equals(e.getActionCommand())) {
+                actionLabel.setText(prefix + "arriving rate to " + input);
+                beepGenerator.setDelay(Integer.parseInt(input));
+            } else if ("arrivingRateVariance".equals(e.getActionCommand())) {
+                actionLabel.setText(prefix + "arriving rate variance to " + input);
+                beepGenerator.setDelayVarianceLimit(Integer.parseInt(input));
+            } else if ("failureRate".equals(e.getActionCommand())) {
+                actionLabel.setText(prefix + "failure rate to " + input);
+                beepGenerator.setFailureRate(Double.parseDouble(input));
+            } else if ("harmoniousTimeOption".equals(e.getActionCommand())) {
+                actionLabel.setText(prefix + "harmonious time option to " + input);
+                beepGenerator.setHarmoniousTimeOptionInNCU(Integer.parseInt(input));
+            } else if ("defaultInstrument".equals(e.getActionCommand())) {
+                actionLabel.setText(prefix + "default instrument to " + input);
+                beepGenerator.setDefaultInstrument(Integer.parseInt(input));
+                //Toolkit.getDefaultToolkit().beep();
+            }
         }
     }
 }

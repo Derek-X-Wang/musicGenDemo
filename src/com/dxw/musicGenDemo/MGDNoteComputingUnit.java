@@ -73,4 +73,13 @@ public class MGDNoteComputingUnit {
             }
         }
     }
+
+    public void setHarmoniousTimeOption(int harmoniousTimeOption) {
+        this.harmoniousTimeOption = harmoniousTimeOption;
+    }
+
+    public void setDefaultInstrument(int newDefaultInstrument){
+        player.changeInstrument(newDefaultInstrument);
+        player.setDefaultInstrument(newDefaultInstrument);
+    }
 }

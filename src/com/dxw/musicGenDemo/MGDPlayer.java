@@ -27,6 +27,10 @@ public class MGDPlayer {
         player.changeInstrument(instrument);
     }
 
+    public void setDefaultInstrument(int newDefaultInstrument){
+        this.defaultInstrument = newDefaultInstrument;
+    }
+
     public  void playNote(String note){
         player.startNote(new Note(note));
     }

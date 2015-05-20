@@ -66,14 +66,16 @@ public class Main implements ActionListener {
 
     // use this function to set up automatic version(2) of Music Generation Demonstration(MGD)
     private static void autoMGD(JFrame myFrame){
+        MGDBeepGenerator beepGenerator =  new MGDBeepGenerator();
+
         myFrame.setSize(350,400);
         myFrame.setLayout(new FlowLayout());
-        MenuPanel menuPanel = new MenuPanel();
+        MenuPanel menuPanel = new MenuPanel(beepGenerator);
         myFrame.add(menuPanel);
 
         //Player player = new Player();
         //player.play("Cq. Cq. Gq. Gq. Aq. Aq. Gh. Fq. Fq. Eq. Eq. Dq. Dq. Ch. Gq. Gq. Fq. Fq. Eq. Eq. Dh. Gq. Gq. Fq. Fq. Eq. Eq. Dh. Cq. Cq. Gq. Gq. Aq. Aq. Gh. Fq. Fq. Eq. Eq. Dq. Dq. Ch.");
-        //MGDBeepGenerator beepGenerator =  new MGDBeepGenerator();
+
         //beepGenerator.start();
     }
 
