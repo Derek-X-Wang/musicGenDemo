@@ -68,7 +68,7 @@ public class Main implements ActionListener {
     private static void autoMGD(JFrame myFrame){
         MGDBeepGenerator beepGenerator =  new MGDBeepGenerator();
 
-        myFrame.setSize(350,400);
+        myFrame.setSize(320,340);
         myFrame.setLayout(new FlowLayout());
         MenuPanel menuPanel = new MenuPanel(beepGenerator);
         myFrame.add(menuPanel);
